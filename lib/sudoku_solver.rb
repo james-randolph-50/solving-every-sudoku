@@ -7,11 +7,22 @@ class SudokuSolver
     new(puzzle_string).solve
   end
 
-  def solve
-    # Start creating your solution here.
-    #
-    # It's likely that you'll want to have many more classes than this one that
-    # was provided for you. Don't be hesistant to extract new objects (and
-    # write tests for them).
+  def grid_values
   end
+
+  def assign
+  end
+
+  def eliminate
+  end
+
+  def display
+  end
+
+  
+
+  def solve
+
+  end
+
 end
