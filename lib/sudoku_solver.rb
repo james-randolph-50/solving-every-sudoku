@@ -7,12 +7,19 @@ class SudokuSolver
   def cross
   end
 
-  @squares = cross(ROWS, COLS) for example: C6
-  nine_squares = ROWS.each_slice(3).map {|r| COLS.each_slice(3).map{|c| cross(r, c)}}.flatten(1)
-  @unitlist = COLS.map{|c| cross(ROWS,[c])} << ROWS.map{|r| cross([r], COLS)} << nine_squares
+  @squares =  cross(ROWS, COLS)
+  nine_squares = ROWS.each_slice(3).map {|r| COLS.each_slice(3).map{|c| cross(r,c)}}.flatten(1)
+  @unitlist = COLS.map{|c| cross(ROWS,[c])} <<
+              ROWS.map{|r| cross([r], COLS)} <<
+              nine_squares
   @units = @squares.inject({}) {|h, s| h[s]=@unitlist.select{|arr| arr.include?(s)};h}
-  @peers = @squares.inject({}) {|h, s| peers=(cross(ROWS,[s[1]]) << cross([s[0]],COLS) << nine_squares.select{|sq| sq.include?(s)} ).flatten; peers.delete(s); h[s]=peers;h}
-
+  @peers = @squares.inject({}) {|h,s| peers=(cross(ROWS,[s[1]]) << 
+                                      cross([s[0]],COLS) << 
+                                      nine_squares.select{|sq| sq.include?(s)} ).
+                                      flatten; 
+                                      peers.delete(s);
+                                      h[s]=peers;
+                                      h}
   def initialize(puzzle_string)
     @puzzle_string = puzzle_string
   end
@@ -25,7 +32,12 @@ class SudokuSolver
     @squares.zip(grid.each_char.grep(/[0-9\.]/))
   end
 
-  def assign
+  def assign(values, s, d)
+    other_values = values[s].sub(d,'')
+    other_values.each_char dp |d2|
+      return false unless eliminate(values, s, d2)
+    end
+    values
   end
 
   def eliminate
