@@ -4,6 +4,12 @@ class SudokuSolver
   COLS = ('1'..'9')
   DIGITS = "123456789"
 
+  def cross
+  end
+
+  @squares = cross(ROWS, COLS)
+  nine_squares = ROWS.each_slice(3).map
+
   def initialize(puzzle_string)
     @puzzle_string = puzzle_string
   end
