@@ -49,6 +49,20 @@ class SudokuSolver
       return false
     elsif values[s].size == 1
       d2 = values[s]
+      @peers[s].each do |s2|
+        return false unless (eliminate(values, s2, d2))
+      end
+    end
+
+    sa = [s]
+    @units[s].each do |u|
+      dplaces = values[s].include?(d) ? sa & u : []
+      return values if dplaces.size == 0
+      if dplaces.size == 1
+        return false unless assign(values, dplaces[0], d)
+      end
+    end
+    values
   end
 
   def display
