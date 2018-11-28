@@ -40,7 +40,15 @@ class SudokuSolver
     values
   end
 
-  def eliminate
+  def eliminate(values, s, d)
+    return values unless values[s].include?(d)
+
+    values[s] = values[s].sub(d,'')
+
+    if values[s].size==0
+      return false
+    elsif values[s].size == 1
+      d2 = values[s]
   end
 
   def display
