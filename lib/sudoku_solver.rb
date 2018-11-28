@@ -28,7 +28,12 @@ class SudokuSolver
     ROWS.each do |r|
       puts line if "DG".include?(r)
       COLS.each do |c|
-        print values
+        print values["#{r}#{c}"].center(width)
+        print '|' if '36'.include?(c)
+      end
+      puts
+    end
+    puts line
   end
 
   
