@@ -135,9 +135,43 @@ def measure(fn, times = 10, runfor = 2000, setup=nil, warmup=nil, teardown=nil)
   if warmup == nil
     warmup = fn
   end
-
-  measureFor(lambda { warmup.call() }, 100)
-
-  result = measureFor(lambda { (0.times).each { |i| fn.call() } }, runfor)
-
   
+  measureFor(lambda { warmup.call() }, 100)
+  
+  result = measureFor(lambda { (0..times).each { |i| fn.call() } }, runfor)
+  
+  if teardown != nil
+    teardown.call()
+  end
+  
+  return result
+end
+
+def report(name, score)
+  puts "#{name}(RunTime): #{score}"
+end
+
+def log(o)
+  puts o
+  return o
+end
+
+def solved(values)
+  unitsolved = lambda { |unit| ((unit.map { |s| (values[s]) }.uniq - DIGITS.chars.uniq {|c| c}).length) == 0 }
+  return values != nil && @unitlist.select{ |unit| unitsolved.call((unit)) }.all?   
+end
+
+def solveGrid(name, grid)
+  solution = nil
+  puts "#{name}: #{grid}"
+  time = Benchmark.realtime do
+  	solution = search(parse_grid(grid))
+  end
+  display(solution)
+  puts "solved: #{solved(solution)}, in #{time * 1000}ms\n"
+end
+
+def displayAll()
+  solveGrid("grid1", GRID1)
+end
+
