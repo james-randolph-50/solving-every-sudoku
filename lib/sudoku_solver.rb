@@ -79,6 +79,33 @@ class SudokuSolver
     puts line
   end
 
+  def parse_grid(grid)
+    values = {}
+    @squares.each do |s|
+      values[s] = DIGITS
+    end
+
+    grid_values(grid).each do |zg|
+      s, d = zg
+      if DIGITS.include?(d)
+        return false unless assign(values, s, d)
+      end
+    end
+    values
+  end
+  
+
+  def search(values)
+    return false unless values
+    return values unless @squares.any?{|s| values[s].size != 1}
+    k,v,l = get_min(values)
+    v.each_char do |d|
+      r = serch(assign(values.clone, k, d))
+      return r if r
+    end
+    return false
+  end
+
   
 
   def solve
