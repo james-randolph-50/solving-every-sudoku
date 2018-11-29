@@ -93,7 +93,7 @@ class SudokuSolver
     end
     values
   end
-  
+
 
   def search(values)
     return false unless values
@@ -112,4 +112,17 @@ class SudokuSolver
 
   end
 
+  GRID1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
+
+
+  def measureFor(fn, timeMinimum)
+    iter = 0
+    elapsed = 0
+    start = Time.now
+    while elapsed < timeMinimum do
+      fn.call()
+      elapsed = (Time.now -start) * 1000
+      iter += 1
+    end
+    return 1000.0 * elapsed /iter
 end
