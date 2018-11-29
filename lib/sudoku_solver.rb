@@ -126,3 +126,18 @@ class SudokuSolver
     end
     return 1000.0 * elapsed /iter
 end
+
+def measure(fn, times = 10, runfor = 2000, setup=nil, warmup=nil, teardown=nil) 
+  if setup != nil
+    setup.call()    
+  end
+
+  if warmup == nil
+    warmup = fn
+  end
+
+  measureFor(lambda { warmup.call() }, 100)
+
+  result = measureFor(lambda { (0.times).each { |i| fn.call() } }, runfor)
+
+  
